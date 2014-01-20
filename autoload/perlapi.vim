@@ -869,10 +869,19 @@ function! perlapi#checkLineForRef()
   endif
 endfunction
 
+function! perlapi#reshowRef()
+  if exists("b:ref")
+    if b:ref.line == line('.')
+      call perlapi#showRef()
+    endif
+  endif
+endfunction
+
 function! perlapi#clearRef()
   let &l:statusline = g:perlapi#statusline
   augroup perlapi
     au!
+    au InsertEnter  <buffer> call perlapi#reshowRef()
   augroup END
 endfunction
 
